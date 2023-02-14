@@ -1,0 +1,26 @@
+test_metadata:
+  type: config
+  name: fargate
+  description: set the description for your test
+
+environments:
+  Fargate:
+    compute_type: FARGATE
+    max_vcpus: 100
+    type: 'MANAGED'
+  FargateSpot:
+    compute_type: FARGATE_SPOT
+    max_vcpus: 10000
+    state: 'DISABLED'
+
+queues:
+  Fargate:
+    environments:
+    - environment: Fargate
+      order: 1
+    priority: 1
+  FargateSpot:
+    environments:
+    - environment: Fargate
+      order: 1
+    priority: 1
