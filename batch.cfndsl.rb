@@ -28,7 +28,7 @@ CloudFormation do
   environments.each do |name, properties|
     compute_resources = {
       MaxvCpus: properties['max_vcpus'],
-      SecurityGroupIds: Ref(:BatchSecurityGroup),
+      SecurityGroupIds: [Ref(:BatchSecurityGroup)],
       Subnets: Ref(:SubnetIds),
       Tags: batch_tags,
       Type: properties.fetch('type', 'MANAGED')
