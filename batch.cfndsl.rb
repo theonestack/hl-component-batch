@@ -31,7 +31,7 @@ CloudFormation do
       SecurityGroupIds: [Ref(:BatchSecurityGroup)],
       Subnets: Ref(:SubnetIds),
       Tags: batch_tags,
-      Type: properties.fetch('type', 'MANAGED')
+      Type: properties['compute_type']
     }
 
     compute_resources[:MinvCpus] = properties['min_vcpus'] if properties.has_key?('min_vcpus')
