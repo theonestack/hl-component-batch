@@ -4,6 +4,7 @@ CloudFormation do
 
   tags = external_parameters.fetch(:tags, {})
   batch_tags.merge(tags)
+  batch_tags_list = batch_tags.map {|k,v| {Key: k, Value: v}}
 
   security_group_rules = external_parameters.fetch(:security_group_rules, [])
   ip_blocks = external_parameters.fetch(:ip_blocks, {})
@@ -12,7 +13,7 @@ CloudFormation do
     GroupDescription FnSub("${EnvironmentName} - Batch compute resources security group")
     VpcId Ref(:VpcId)
     SecurityGroupIngress generate_security_group_rules(security_group_rules, ip_blocks, true) unless (security_group_rules.empty? || ip_blocks.empty?)
-    Tags batch_tags
+    Tags batch_tags_list
   }
 
   IAM_Role(:BatchServiceRole) {
@@ -20,6 +21,7 @@ CloudFormation do
     ManagedPolicyArns([
       'arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole'
     ])
+    Tags batch_tags_list
   }
 
   environments = external_parameters.fetch(:environments, {})
