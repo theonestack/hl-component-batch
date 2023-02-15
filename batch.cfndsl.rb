@@ -30,10 +30,10 @@ CloudFormation do
       MaxvCpus: properties['max_vcpus'],
       SecurityGroupIds: [Ref(:BatchSecurityGroup)],
       Subnets: Ref(:SubnetIds),
-      Tags: batch_tags,
       Type: properties['compute_type']
     }
 
+    compute_resources[:Tags] = batch_tags unless properties['compute_type'].include?('FARGATE')
     compute_resources[:MinvCpus] = properties['min_vcpus'] if properties.has_key?('min_vcpus')
 
     Batch_ComputeEnvironment(:"#{name}ComputeEnvironment") {
