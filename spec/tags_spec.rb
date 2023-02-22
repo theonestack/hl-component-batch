@@ -29,7 +29,7 @@ describe 'compiled component batch' do
       end
       
       it "to have property Tags" do
-          expect(resource["Properties"]["Tags"]).to eq({"Environment"=>{"Ref"=>"EnvironmentName"}})
+          expect(resource["Properties"]["Tags"]).to eq([{"Key"=>"Environment", "Value"=>{"Ref"=>"EnvironmentName"}}])
       end
       
     end
@@ -47,6 +47,10 @@ describe 'compiled component batch' do
       
       it "to have property ManagedPolicyArns" do
           expect(resource["Properties"]["ManagedPolicyArns"]).to eq(["arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"])
+      end
+      
+      it "to have property Tags" do
+          expect(resource["Properties"]["Tags"]).to eq([{"Key"=>"Environment", "Value"=>{"Ref"=>"EnvironmentName"}}])
       end
       
     end
@@ -67,7 +71,7 @@ describe 'compiled component batch' do
       end
       
       it "to have property ComputeResources" do
-          expect(resource["Properties"]["ComputeResources"]).to eq({"MaxvCpus"=>100, "SecurityGroupIds"=>{"Ref"=>"BatchSecurityGroup"}, "Subnets"=>{"Ref"=>"SubnetIds"}, "Tags"=>{"Environment"=>{"Ref"=>"EnvironmentName"}}, "Type"=>"MANAGED"})
+          expect(resource["Properties"]["ComputeResources"]).to eq({"MaxvCpus"=>100, "SecurityGroupIds"=>[{"Ref"=>"BatchSecurityGroup"}], "Subnets"=>{"Ref"=>"SubnetIds"}, "Type"=>"FARGATE"})
       end
       
       it "to have property State" do

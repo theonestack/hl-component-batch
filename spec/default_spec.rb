@@ -29,7 +29,7 @@ describe 'compiled component batch' do
       end
       
       it "to have property Tags" do
-          expect(resource["Properties"]["Tags"]).to eq({"Environment"=>{"Ref"=>"EnvironmentName"}})
+          expect(resource["Properties"]["Tags"]).to eq([{"Key"=>"Environment", "Value"=>{"Ref"=>"EnvironmentName"}}])
       end
       
     end
@@ -47,6 +47,10 @@ describe 'compiled component batch' do
       
       it "to have property ManagedPolicyArns" do
           expect(resource["Properties"]["ManagedPolicyArns"]).to eq(["arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"])
+      end
+      
+      it "to have property Tags" do
+          expect(resource["Properties"]["Tags"]).to eq([{"Key"=>"Environment", "Value"=>{"Ref"=>"EnvironmentName"}}])
       end
       
     end
