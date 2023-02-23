@@ -45,6 +45,11 @@ CloudFormation do
         TerminateJobsOnUpdate: Ref(:TerminateJobsOnUpdate)
       })
     }
+
+    Output(:"#{name}ComputeEnvironment") {
+      Value Ref(:"#{name}ComputeEnvironment")
+      Export FnSub("${EnvironmentName}-#{external_parameters[:component_name]}-#{name}-compute-env")
+    }
   end
 
   queues = external_parameters.fetch(:queues, {})
@@ -54,6 +59,11 @@ CloudFormation do
       Priority properties['priority']
       State properties.fetch('state', 'ENABLED')
       Tags batch_tags
+    }
+
+    Output(:"#{name}JobQueue") {
+      Value Ref(:"#{name}JobQueue")
+      Export FnSub("${EnvironmentName}-#{external_parameters[:component_name]}-#{name}-job-queue")
     }
   end
 
